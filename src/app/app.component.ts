@@ -1,31 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Hero } from './models/hero.model';
-
-const HEROES: Hero[] = [
-  {id: 11,name: 'Firestorm'},
-  {id: 12,name: 'Icestorm'},
-  {id: 13,name: 'Sandstorm'},
-  {id: 14,name: 'Earthstorm'},
-  {id: 15,name: 'Stormstorm'},
-  {id: 16,name: 'Brimstorm'},
-  {id: 17,name: 'Waterstorm'},
-  {id: 18,name: 'Airstorm'},
-  {id: 19,name: 'Pebblestorm'},
-  {id: 20,name: 'Fiststorm'},
-]
-
+import { Heroes } from './proxies/mock-heroes.proxy';
+import { HeroService } from './services/hero.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(private heroService: HeroService) {  }
+
   title = 'Tour of Heroe!';
-  heroes = HEROES;
+  heroes: Hero[];
   selectedHero: Hero;
 
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
   }
+
+  getHeroes(): void{
+    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+  }
+
+  ngOnInit(): void {
+    this.getHeroes();
+  }
+
 }
