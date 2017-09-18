@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeroDetailsComponent } from './hero-details/hero-details.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 // Services
 import { HeroService } from './services/hero.service';
@@ -16,16 +17,31 @@ import { HeroService } from './services/hero.service';
   declarations: [
     AppComponent,
     HeroesComponent,
-    HeroDetailsComponent
+    HeroDetailsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot([
+      // redirect route
+      {
+        path: '',
+        redirectTo: '/dashboard',
+        pathMatch: 'full'
+      },
+      {
+      path: 'dashboard',
+      component: DashboardComponent
+    },
     {
       path: 'heroes',
       component: HeroesComponent
+    },
+    {
+      path: 'detail/:id',
+      component: HeroDetailsComponent
     }
   ])
   ],
